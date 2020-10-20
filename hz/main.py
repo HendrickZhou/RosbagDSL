@@ -3,7 +3,7 @@
 
 class Pipe:
     """
-    code executed each frame
+    decorator for code executed each frame
 
     Concept Frame:
     ----------------------
@@ -49,8 +49,8 @@ class _Register:
         # iter1 = iter of bag one
         while True:
             topic, msg, timestamp = iter1.next()
-            for msg_sig in all_msg_sig:
-                msg = _MsgObj(msg_sig)
+            for msg_data in all_required_msg_from_pipe:
+                real_msg_data.append(_MsgObj(msg_data))
 
             if topic correct and msg correct
                 result = exec(pipe.function(), param1, param2)
@@ -64,14 +64,25 @@ class _MsgObjMeta(object):
         cls.__slots__ = []
 
 class _MsgObj(metaclass=_MsgObjMeta):
-    __slots__ = []
+    '''
+    This Class are design to be standalone msg object for python user
+    If they only use this object, they're using it as a wrapper for message
+    '''
     def __init__(self):
+        pass
 
     @staticmethod
     def _get_attr(signature):
         for sig in signature:
             pass
 
+    def __getitem__(self, item):
+        '''
+        overriding the original dot operation
+        :param item:
+        :return:
+        '''
+        pass
 
 """
 interface
