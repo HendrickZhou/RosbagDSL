@@ -10,8 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3006273f-76f3-4210-a759-edfc342ba8dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/hz/msg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hz/pipe.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/example_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/doc/example_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hz/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/main.py" afterDir="false" />
@@ -54,7 +52,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603193175132</updated>
       <workItem from="1603193176357" duration="10804000" />
-      <workItem from="1603252077960" duration="21441000" />
+      <workItem from="1603252077960" duration="26564000" />
     </task>
     <task id="LOCAL-00001" summary="staged">
       <created>1603267632235</created>

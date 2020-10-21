@@ -14,22 +14,34 @@ class _Register:
     """
     singleton object
     register for all pipe agent and function call
-    register(str_literal) -> run_all[pre_check(bag, topic) -> get bag iter and start loop
+    register(str_literal) -> pre_check(bag, topic) -> run loop -> get bag iter and start loop
     -> check msg on the fly]
     """
     registration = []
+    bags = []
 
     def __init__(self):
         self.support_msgs = []
         self.extra_args = []
 
-    def __call__(self, *args, **kwargs):
-        # run for all registration
-
     def register(self, pipe_node: Callable, support_msgs: List[str], extra_args: List[Any]):
         for msg in support_msgs:
-            self.support_msgs.append(_MsgObj(msg))
-        # TODO checking topics
+            msg_obj = _MsgObj(msg)
+            try:
+                rosbag.Bag(msg_obj.bagname, 'r').__enter__()
+            except Exception:
+                # identify problem
+                print("bag not exists")
+
+            if not self.is_legal_topic(msg_obj.bagname, msg_obj.topic):
+                raise Exception("topic not legal")
+            self.support_msgs.append(msg_obj)
+            self.bags.append(msg_obj.bagname)
+
+        # TODO checking bags topics exist
+        # TODO checking if mapping legal
+        # if legal
+
         self.extra_args = extra_args
         pipe_node_sig = list(inspect.signature(Pipe.raw_registry[pipe_node.__name__]).parameters)
 
@@ -50,29 +62,29 @@ class _Register:
     def _pre_check(self):
         # check bag exists
         # check topic exist
-        bag_context = rosbag.Bag(bag_name, 'r').__enter__()
+
 
     def run_all(self):
-        # checking
-        self._pre_check()
+        bag_context = rosbag.Bag(bag_name, 'r').__enter__()
+        bag_iter = bag_context.read_messages()
 
-        bag_iter = self.bag_context.read_messages()
+        # while True:
+        #     topic, msg, timestamp = iter1.next()
+            # for msg_data in all_required_msg_from_pipe:
+            #     real_msg_data.append(_MsgObj(msg_data))
+            #
+            # if topic correct and msg correct
+            #     result = exec(pipe.function(), param1, param2)
+            #     result_container.append(result)
+        bag_context.__exit__()
 
-        while True:
-            topic, msg, timestamp = iter1.next()
-            for msg_data in all_required_msg_from_pipe:
-                real_msg_data.append(_MsgObj(msg_data))
-
-            if topic correct and msg correct
-                result = exec(pipe.function(), param1, param2)
-                result_container.append(result)
 
 
 """
 interface & shortcut
 """
 registry = _Register()
-def save(pipe_node, msgs, args):
+def mark(pipe_node, msgs, args):
     '''
     main entry for the operation
     :return:
@@ -87,4 +99,6 @@ def save(pipe_node, msgs, args):
 
     # create mapping relationship, give the variable to pipe operand
 
+def run():
+    pass
 

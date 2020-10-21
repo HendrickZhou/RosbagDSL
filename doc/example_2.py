@@ -26,7 +26,7 @@ def run(pair_id):
     t3 = back_car + "@/fusion"
     m1 = front_car + "@/topic/name @ msgname.msgname.name.0.1.name"
     m2 = t1 + "x:/othername/[]/sdf[]/" # xpath extension support
-    hz.save(compute, msg1, msg2, *, arg1, arg2)
+    hz.mark(compute, msg1, msg2, *, arg1, arg2)
 
     
 
@@ -47,4 +47,4 @@ def filter(m3, t1, t2, *, args):
 
 for i in range(1, 8):
     run(i)
-
+hz.run()
