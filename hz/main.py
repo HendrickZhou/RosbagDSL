@@ -1,52 +1,37 @@
 # python3.7
-
-
-class Pipe:
-    """
-    decorator for code executed each frame
-
-    Concept Frame:
-    ----------------------
-    This implies to each timestamp with a message entity in the bag
-
-    Instance Var:
-    ______________________
-    signatures
-
-    """
-
-    def __init__(self, node_func):
-        self.func = node_func
-
-    def __call__(self, *args, **kwargs):
-        # parsing and modifying funcion code
-        # saving some registor variable
-        # regist this computation meta to global machine
-        self.func()
-
-    # return a function object
-    def _translate(self):
-        pass
+import rosbag
  
 
 class _Register:
-    '''
+    """
     singleton object
-    register for all pipe agent
-    '''
+    register for all pipe agent and function call
+    register(str_literal) -> run_all[pre_check(bag, topic) -> get bag iter and start loop
+    -> check msg on the fly]
+    """
     registration = []
+
     def __init__(self):
         pass
 
     def __call__(self, *args, **kwargs):
         # run for all registration
 
-
     def register(self, pipe_node):
-        self.registration.append(pipe_node)
+        # mapping msg to pipe, without checking legality
+
+
+    def _pre_check(self):
+        # check bag exists
+        # check topic exist
+        bag_context = rosbag.Bag(bag_name, 'r').__enter__()
 
     def run_all(self):
-        # iter1 = iter of bag one
+        # checking
+        self._pre_check()
+
+        bag_iter = self.bag_context.read_messages()
+
         while True:
             topic, msg, timestamp = iter1.next()
             for msg_data in all_required_msg_from_pipe:
@@ -57,36 +42,22 @@ class _Register:
                 result_container.append(result)
 
 
-
-
-class _MsgObjMeta(object):
-    def __new__(cls, *args, **kwargs):
-        cls.__slots__ = []
-
-class _MsgObj(metaclass=_MsgObjMeta):
-    '''
-    This Class are design to be standalone msg object for python user
-    If they only use this object, they're using it as a wrapper for message
-    '''
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def _get_attr(signature):
-        for sig in signature:
-            pass
-
-    def __getitem__(self, item):
-        '''
-        overriding the original dot operation
-        :param item:
-        :return:
-        '''
-        pass
-
 """
-interface
+interface & shortcut
 """
-def save():
-    pass
+registry = _Register()
+def save(*args):
+    '''
+    main entry for the operation
+    :return:
+    '''
+    target_msg
+    deeandency_msg_signature
+    # additively register the bag, topic, msg info, pipe we need
+    registry.register()
+    # compile corresponding pipe function
+    # pre-loop checking(if exist, if on the same topic) and recovery
+
+    # create mapping relationship, give the variable to pipe operand
+
 

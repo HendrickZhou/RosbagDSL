@@ -5,9 +5,6 @@
 
 class DTree:
     '''
-    this class return the definite correct signature for msg path
-    exception handling and checking here
-
     instance var:
     ------------------
     str_literal
@@ -23,3 +20,13 @@ class DTree:
         # parse and save to slot signature
         _components = self.str_literal.split('.')
         return _components
+
+# class Parser(DTree):
+#     """
+#     this class return the definite correct signature for msg path
+#     exception handling and checking here
+#     """
+#     def __init__(self, str_literal, bag_context):
+#         super(Parser, self).__init__(str_literal)
+#
+#     def parse(self, *args):

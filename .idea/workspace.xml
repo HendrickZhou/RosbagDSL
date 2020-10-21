@@ -9,7 +9,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3006273f-76f3-4210-a759-edfc342ba8dc" name="Default Changelist" comment="" />
+    <list default="true" id="3006273f-76f3-4210-a759-edfc342ba8dc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/example_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/doc/example_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hz/dtree_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/dtree_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hz/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +22,9 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1j8kb7YmUT20FBriOxzgdBFSjaN" />
   <component name="ProjectViewState">
@@ -41,6 +49,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603193175132</updated>
       <workItem from="1603193176357" duration="10804000" />
+      <workItem from="1603252077960" duration="14909000" />
     </task>
     <servers />
   </component>
