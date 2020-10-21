@@ -26,7 +26,7 @@ def run(pair_id):
     t3 = back_car + "@/fusion"
     m1 = front_car + "@/topic/name @ msgname.msgname.name.0.1.name"
     m2 = t1 + "x:/othername/[]/sdf[]/" # xpath extension support
-    hz.save(m2, compute, msg1, msg2, ts3)
+    hz.save(compute, msg1, msg2, *, arg1, arg2)
 
     
 
@@ -36,7 +36,7 @@ def compute(m1, m2):
 
 
 @Pipe
-def filter(m3, t1, t2, args):
+def filter(m3, t1, t2, *, args):
     {reg1, reg2}
     if reg1.notset:
         if t1 > args:
