@@ -28,7 +28,7 @@ class Pipe(object):
     def __init__(self, node_func):
         self.raw_registry[node_func.__name__] = node_func
         # self.raw_func_body = node_func
-        self.func = LoopMetaFunction(node_func)
+        self.func = _LoopMetaFunction(node_func)
 
     def __call__(self, *args, **kwargs):
         # parsing and modifying funcion code
@@ -48,7 +48,7 @@ class Pipe(object):
         print("setting ignored")
 
 
-class LoopMetaFunction:
+class _LoopMetaFunction:
     """
     object to store raw code and compiled code
 
@@ -68,6 +68,7 @@ class LoopMetaFunction:
     def compile(self):
         # turn raw code into executable
         code = self.raw_code
+
         return "pass"
 
     def __call__(self, *args, **kwargs):
