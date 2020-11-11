@@ -8,7 +8,7 @@ from .msg import _MsgObj
 
 
 class _Task:
-    __slots__ = "meta_func", "call_mapping", "extra_args"
+    __slots__ = "meta_func", "call_mapping", "extra_args", "topic_scope", "bag_scope"
 
 class _Register:
     """
@@ -56,6 +56,7 @@ class _Register:
         else:
             t.call_mapping = {a:b for a,b in zip(pipe_node_sig ,self.support_msgs)}
             t.extra_args = {a:b for a,b in zip(pipe_node_sig[len(self.support_msgs):], self.extra_args)}
+            t.topic_scope = pipe_node.topic_scope # TODO
         self.registration.append(t)
 
 

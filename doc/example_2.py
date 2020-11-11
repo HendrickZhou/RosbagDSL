@@ -26,7 +26,8 @@ def run(pair_id):
     t3 = back_car + "@/fusion"
     m1 = front_car + "@/topic/name @ msgname.msgname.name.0.1.name"
     m2 = t1 + "x:/othername/[]/sdf[]/" # xpath extension support
-    hz.mark(compute, msg1, msg2, *, arg1, arg2)
+    hz.mark(m1) # save without computation
+    hz.mark(compute, msg1, msg2, *, arg1, arg2) # save with meta computation
 
     
 

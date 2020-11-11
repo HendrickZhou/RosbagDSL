@@ -36,3 +36,6 @@ case 3:
   * 多个topic/bag同时读的应用场景
     * 其实仔细想想，如果用户没有规定两个不同步的数据序列间的运算的逻辑和先后顺序等，本身就是个伪命题
     * 不需要用户规定逻辑的场景可能就是filter的情况了，这个对于不同步时间序列是有意义的
+
+  * meta return multiple value
+    * avoid that for now 
