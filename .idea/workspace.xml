@@ -10,8 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3006273f-76f3-4210-a759-edfc342ba8dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/example_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/doc/example_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hz/pipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/pipe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hz/pipe_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/pipe_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,10 +40,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/catkin_ws/src/msd_worldmodel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../catkin_ws/src/msd_worldmodel" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -54,7 +64,7 @@
       <workItem from="1603252077960" duration="26590000" />
       <workItem from="1604827425921" duration="1547000" />
       <workItem from="1604892633582" duration="46000" />
-      <workItem from="1605073190148" duration="36838000" />
+      <workItem from="1605073190148" duration="43518000" />
     </task>
     <task id="LOCAL-00001" summary="staged">
       <created>1603267632235</created>
@@ -94,9 +104,13 @@
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
     <state x="471" y="234" key="SettingsEditor/0.1200.1920.1080/65.24.1855.1176@65.24.1855.1176" timestamp="1603193224245" />
-    <state x="652" y="287" width="672" height="678" key="search.everywhere.popup" timestamp="1605094082151">
+    <state x="607" y="212" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1605177195467">
       <screen x="65" y="24" width="1855" height="1176" />
     </state>
-    <state x="652" y="287" width="672" height="678" key="search.everywhere.popup/0.1200.1920.1080/65.24.1855.1176@65.24.1855.1176" timestamp="1605094082151" />
+    <state x="607" y="212" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.1200.1920.1080/65.24.1855.1176@65.24.1855.1176" timestamp="1605177195467" />
+    <state x="652" y="287" width="672" height="678" key="search.everywhere.popup" timestamp="1605176327867">
+      <screen x="65" y="24" width="1855" height="1176" />
+    </state>
+    <state x="652" y="287" width="672" height="678" key="search.everywhere.popup/0.1200.1920.1080/65.24.1855.1176@65.24.1855.1176" timestamp="1605176327867" />
   </component>
 </project>

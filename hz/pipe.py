@@ -5,6 +5,8 @@ import ast
 import inspect
 from astunparse import unparse
 
+DEBUG = False
+
 
 class Pipe(object):
     """
@@ -74,12 +76,17 @@ class _LoopMetaFunction:
 
         self.exec_code = None
 
+        # mutable each loop
         self.local_vars = None
         self.topic_vars = None
         self.extra_vars = None
         self.register_vars = None
 
-    def compile(self):
+        self.result_data = None
+
+        self.is_compiled = False
+
+    def _compile(self):
         # turn raw code into executable
 
         # legal_code_obj = types.CodeType(
@@ -99,42 +106,46 @@ class _LoopMetaFunction:
 
         # get topic_vars and extra_vars mapping
         names_map = dict()
-        topic_var_list = []
+        topic_var_list = [] # TODO can't make it tuple if ctx assign exists
         extra_var_list = []
         for arg_obj in _ast.body[0].args.args:
             topic_var_list.append(arg_obj.arg)
-        self.topic_vars = topic_var_list # can't make it tuple if ctx assign exists
         for kw_obj in _ast.body[0].args.kwonlyargs:
             extra_var_list.append(kw_obj.arg)
-        self.extra_vars = extra_var_list
 
-        for i, name in enumerate(self.topic_vars):
+        for i, name in enumerate(topic_var_list):
             names_map[name] = (i, "topic_vars")
 
-        for i, name in enumerate(self.extra_vars):
+        for i, name in enumerate(extra_var_list):
             names_map[name] = (i, "extra_vars")
 
         new_ast = ast.fix_missing_locations(ASTModifier(names_map).visit(_ast))
+        new_ast = ast.fix_missing_locations(ReplaceReturn().visit(new_ast))
         new_ast = ast.fix_missing_locations(RemoveFuncDef().visit(new_ast))
-        import pdb; pdb.set_trace()
+        if DEBUG:
+            import pdb; pdb.set_trace()
         self.exec_code = unparse(new_ast)
-        import pdb; pdb.set_trace()
+        self.is_compiled = True
+        if DEBUG:
+            import pdb; pdb.set_trace()
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, support_msgs, extra_args):
         # lazy compile?
         # self.exec_code = self.compile(self.raw_code)
-        # add args to exec_code function closures
+        self.topic_vars = tuple(support_msgs)
+        self.extra_vars = tuple(extra_args) # enforce it as tuple
+        if not self.is_compiled:
+            self._compile()  # make sure the code exec environment is set properly
+            self.is_compiled = True
+        if DEBUG:
+            print("executing: \n" + self.exec_code)
         exec(self.exec_code)
+        return self.result_data
 
 
-class RemoveArgsList(ast.NodeTransformer):
-    def visit_arguments(self, node):
-        # empty the argument list, add self to the list
-        node.args = [ast.arg(arg="self", annotation=None)]
-        node.kwonlyargs = []
-        return node
-
-
+#------------------------------------------------------------------------
+# ast modification
+#------------------------------------------------------------------------
 class RemoveFuncDef(ast.NodeTransformer):
     def visit_Module(self, node):
         node.body = node.body[0].body
@@ -144,6 +155,15 @@ class RemoveFuncDef(ast.NodeTransformer):
     #     # if is the top level func:
     #     func_body = node.body
     #     return ast.copy_location(func_body, node)
+
+
+class RemoveArgsList(ast.NodeTransformer):
+    def visit_arguments(self, node):
+        # empty the argument list, add self to the list
+        # node.args = [ast.arg(arg="self", annotation=None)]
+        node.kwonlyargs = []
+        node.args = []
+        return node
 
 
 class RemoveRegDef(ast.NodeTransformer):
@@ -157,7 +177,7 @@ class RemoveRegDef(ast.NodeTransformer):
 
 class ReplaceVar(ast.NodeTransformer):
     """
-    target_names should be topic_vars and extra_vars, Sequence
+    target_names should be topic_var_list and extra_var_list, Sequence
     """
     def __init__(self, names_map):
         self.names_map = names_map
@@ -178,6 +198,28 @@ class ReplaceVar(ast.NodeTransformer):
             return node
 
 
+class ReplaceReturn(ast.NodeTransformer):
+    # TODO return grammar check!!!
+    def visit_Return(self, node):
+        results = node.value # tuple or name
+        if type(results) is ast.Name:  # just one variable
+            result_tuple = ast.Tuple(
+                elts=[results],
+                ctx=ast.Load()
+            )
+        else:
+            result_tuple = results
+
+        return ast.Assign(
+            targets=[ast.Attribute(
+                value=ast.Name(id="self", ctx=ast.Load()),
+                attr="result_data",  # TODO magic number here
+                ctx=ast.Store()
+            )],
+            value=result_tuple
+        )
+
+
 class ASTModifier(RemoveRegDef, ReplaceVar):
     """
     In-place ast modification
@@ -185,6 +227,10 @@ class ASTModifier(RemoveRegDef, ReplaceVar):
     def __init__(self, names_map):
         super().__init__(names_map)
 
+
+#------------------------------------------------
+#
+#-------------------------------------------------
 
 class _RegVar:
     def __init__(self, name):

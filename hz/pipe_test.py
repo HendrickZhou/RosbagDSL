@@ -11,19 +11,25 @@ def filter(m3, t1, t2, *, args):
     {reg1, reg2}
     a = 1
     if m3 > t1:
-        return m3 * t2 -1
+        return m3 * t2 -1, t2
     else:
-        return t2 - a
-filter.meta_func.compile()
+        # each return tuple/name size must match, or grammar mistake prompts
+        return t2 - a - args, None # None means it's not in array, otherwise use default value 0
+
+# f = filter.meta_func
+print(filter.meta_func([1,2,1], [1]))
+print(filter.meta_func([12,2,3], [1]))
 
 """
 This piece of code should be compiled into string like this:
 --- exec_code
 a = 1
-if topic_vars[0] > extra_vars[0]:
-    return topic_vars[0] * topic_vars[2].value * a
+if self.topic_vars[0] > self.extra_vars[0]:
+    # return self.topic_vars[0] * self.topic_vars[2].value * a
+    self.result = (self.topic_vars[0] * self.topic_vars[2].value * a)
 else:
-    return topic_vars[1] - 1
+    # return self.topic_vars[1] - 1
+    self.result_data = (self.topic_vars[1] -1)
 --- topic_vars
 (m1, m2, m3) -> _MsgObj
 --- extra_vars
@@ -39,7 +45,7 @@ while:
     ...
     ...
     # find meta for corresponding topic: meta = pipe_node.meta_func
-    data = meta(m1, m2, m3, extra_arg)
+    # data = meta(self.support_msgs, self.extra_args)
     
     container.append(data)
 """

@@ -31,19 +31,19 @@ def run(pair_id):
 
     
 
-@Pipe
+@Pipe("velocity/npy")
 def compute(m1, m2):
     return m1 * m2
 
 
-@Pipe
+@Pipe("accelerate/npy", "distance/npy")
 def filter(m3, t1, t2, *, args):
     {reg1, reg2}
     if reg1.notset:
         if t1 > args:
             reg1.set(t1)
     if m3.avialable:
-        return m3 * 2
+        return m3 * 2, t1
 
 
 for i in range(1, 8):
