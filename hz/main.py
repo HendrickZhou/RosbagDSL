@@ -35,6 +35,7 @@ class _Register:
 
             if not self.is_legal_topic(msg_obj.bagname, msg_obj.topic):
                 raise Exception("topic not legal")
+
             self.support_msgs.append(msg_obj)
             self.bags.append(msg_obj.bagname)
 
@@ -66,18 +67,22 @@ class _Register:
 
 
     def run_all(self):
-        bag_context = rosbag.Bag(bag_name, 'r').__enter__()
-        bag_iter = bag_context.read_messages()
+        for bag_name in self.all_bags:
+            bag_context = rosbag.Bag(bag_name, 'r').__enter__()
+            bag_iter = bag_context.read_messages()
 
-        # while True:
-        #     topic, msg, timestamp = iter1.next()
-            # for msg_data in all_required_msg_from_pipe:
-            #     real_msg_data.append(_MsgObj(msg_data))
-            #
-            # if topic correct and msg correct
-            #     result = exec(pipe.function(), param1, param2)
-            #     result_container.append(result)
-        bag_context.__exit__()
+            while True:
+                topic, msg, timestamp = bag_iter.next()
+
+            # while True:
+            #     topic, msg, timestamp = iter1.next()
+                # for msg_data in all_required_msg_from_pipe:
+                #     real_msg_data.append(_MsgObj(msg_data))
+                #
+                # if topic correct and msg correct
+                #     result = exec(pipe.function(), param1, param2)
+                #     result_container.append(result)
+            bag_context.__exit__()
 
 
 
