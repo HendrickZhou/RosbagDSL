@@ -10,13 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3006273f-76f3-4210-a759-edfc342ba8dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/example_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/doc/example_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hz/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hz/pipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/pipe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hz/pipe_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/hz/pipe_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +54,7 @@
       <workItem from="1603252077960" duration="26590000" />
       <workItem from="1604827425921" duration="1547000" />
       <workItem from="1604892633582" duration="46000" />
-      <workItem from="1605073190148" duration="30056000" />
+      <workItem from="1605073190148" duration="36838000" />
     </task>
     <task id="LOCAL-00001" summary="staged">
       <created>1603267632235</created>

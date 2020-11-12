@@ -1,4 +1,4 @@
-#
+# python3.5
 #
 import types
 import ast
@@ -114,17 +114,76 @@ class _LoopMetaFunction:
         for i, name in enumerate(self.extra_vars):
             names_map[name] = (i, "extra_vars")
 
-        new_ast = ast.fix_missing_locations(ReplaceVarAndRemoveRegDef(names_map).visit(_ast))
+        new_ast = ast.fix_missing_locations(ASTModifier(names_map).visit(_ast))
+        new_ast = ast.fix_missing_locations(RemoveFuncDef().visit(new_ast))
         import pdb; pdb.set_trace()
         self.exec_code = unparse(new_ast)
         import pdb; pdb.set_trace()
-
 
     def __call__(self, *args, **kwargs):
         # lazy compile?
         # self.exec_code = self.compile(self.raw_code)
         # add args to exec_code function closures
         exec(self.exec_code)
+
+
+class RemoveArgsList(ast.NodeTransformer):
+    def visit_arguments(self, node):
+        # empty the argument list, add self to the list
+        node.args = [ast.arg(arg="self", annotation=None)]
+        node.kwonlyargs = []
+        return node
+
+
+class RemoveFuncDef(ast.NodeTransformer):
+    def visit_Module(self, node):
+        node.body = node.body[0].body
+        return node
+    # def visit_FunctionDef(self, node):
+    #     # TODO: need to make sure that user_defined func exist??
+    #     # if is the top level func:
+    #     func_body = node.body
+    #     return ast.copy_location(func_body, node)
+
+
+class RemoveRegDef(ast.NodeTransformer):
+    def visit_Expr(self, node):
+        # find the pattern that is a register expression: Expr(Set)
+        if type(node.value) is ast.Set:
+            return None
+        else:
+            return node
+
+
+class ReplaceVar(ast.NodeTransformer):
+    """
+    target_names should be topic_vars and extra_vars, Sequence
+    """
+    def __init__(self, names_map):
+        self.names_map = names_map
+        super().__init__()
+
+    def visit_Name(self, node):
+        if node.id in self.names_map:
+            return ast.Subscript(
+                value=ast.Attribute(
+                    value=ast.Name(id="self", ctx=ast.Load()),
+                    attr=self.names_map[node.id][1],
+                    ctx=ast.Load()
+                ),
+                slice=ast.Index(value=ast.Num(n=self.names_map[node.id][0])),
+                ctx=node.ctx  # now it supports assignment
+            )
+        else:
+            return node
+
+
+class ASTModifier(RemoveRegDef, ReplaceVar):
+    """
+    In-place ast modification
+    """
+    def __init__(self, names_map):
+        super().__init__(names_map)
 
 
 class _RegVar:
@@ -148,33 +207,3 @@ class _RegVar:
     @default.setter
     def default(self, df):
         self._default = df
-
-
-class ReplaceVarAndRemoveRegDef(ast.NodeTransformer):
-    """
-    target_names should be topic_vars and extra_vars, Sequence
-    """
-    def __init__(self, names_map):
-        self.names_map = names_map
-        super(ReplaceVarAndRemoveRegDef, self).__init__()
-
-    def visit_Name(self, node):
-        if node.id in self.names_map:
-            return ast.Subscript(
-                value=ast.Attribute(
-                    value=ast.Name(id="self", ctx=ast.Load()),
-                    attr=self.names_map[node.id][1],
-                    ctx=ast.Load()
-                ),
-                slice=ast.Index(value=ast.Num(n=self.names_map[node.id][0])),
-                ctx=node.ctx  # now it supports assignment
-            )
-        else:
-            return node
-
-    def visit_Expr(self, node):
-        # find the pattern that is a register expression: Expr(Set)
-        if type(node.value) is ast.Set:
-            return None
-        else:
-            return node
